@@ -5,212 +5,87 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Royal Blue Shop</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Poppins", sans-serif;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", sans-serif; }
     body {
       background: linear-gradient(135deg, #0a1a2f, #001a4d);
-      color: #fff;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      color: #fff; min-height: 100vh; display: flex; flex-direction: column; align-items: center;
     }
-
     header {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px;
-      background: rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(10px);
-      position: sticky;
-      top: 0;
-      z-index: 10;
+      width: 100%; display: flex; justify-content: space-between; align-items: center;
+      padding: 15px 20px; background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(10px);
+      position: sticky; top: 0; z-index: 10;
     }
-
     header button {
-      background: #007bff;
-      color: white;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-weight: bold;
+      background: #007bff; color: white; border: none; padding: 10px 18px;
+      border-radius: 8px; cursor: pointer; transition: 0.3s; font-weight: bold;
       box-shadow: 0 0 10px #007bff;
     }
-
-    header button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px #00aaff;
-      background: #0095ff;
+    header button:hover { transform: scale(1.05); background: #0095ff; }
+    h1 { margin: 20px 0; text-shadow: 0 0 10px #007bff; }
+    .search-box { margin-bottom: 20px; }
+    .search-box input {
+      padding: 10px; border: none; border-radius: 8px; width: 250px;
+      text-align: center; outline: none;
     }
-
-    #searchBar {
-      padding: 8px 12px;
-      border-radius: 8px;
-      border: none;
-      outline: none;
-      width: 250px;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-    }
-
-    h1 {
-      margin: 20px 0;
-      text-shadow: 0 0 10px #007bff;
-    }
-
     .product-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      width: 90%;
-      margin-bottom: 40px;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px; width: 90%; margin-bottom: 40px;
     }
-
     .product {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 15px;
-      padding: 15px;
-      text-align: center;
-      box-shadow: 0 0 15px rgba(0, 123, 255, 0.3);
-      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.05); border-radius: 15px; padding: 15px; text-align: center;
+      box-shadow: 0 0 15px rgba(0, 123, 255, 0.3); transition: all 0.3s ease;
     }
-
-    .product:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 25px rgba(0, 170, 255, 0.5);
-    }
-
-    .product img {
-      width: 100%;
-      border-radius: 10px;
-      height: 180px;
-      object-fit: cover;
-    }
-
-    .product h3 {
-      margin: 10px 0 5px;
-    }
-
-    .product p {
-      font-size: 14px;
-      opacity: 0.8;
-    }
-
-    .product span {
-      display: block;
-      margin-top: 8px;
-      color: #00aaff;
-      font-weight: bold;
-    }
+    .product:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(0, 170, 255, 0.5); }
+    .product img { width: 100%; border-radius: 10px; height: 180px; object-fit: cover; }
+    .product h3 { margin: 10px 0 5px; }
+    .product p { font-size: 14px; opacity: 0.8; }
+    .product span { display: block; margin-top: 8px; color: #00aaff; font-weight: bold; }
 
     /* Popups */
     .popup {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.6);
-      justify-content: center;
-      align-items: center;
-      animation: fadeIn 0.4s ease;
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6); justify-content: center; align-items: center;
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
     .popup-content {
-      background: rgba(10, 30, 60, 0.9);
-      padding: 25px;
-      border-radius: 15px;
-      width: 320px;
-      box-shadow: 0 0 20px #007bff;
-      backdrop-filter: blur(10px);
+      background: rgba(10, 30, 60, 0.9); padding: 25px; border-radius: 15px; width: 300px;
+      box-shadow: 0 0 20px #007bff; backdrop-filter: blur(10px);
     }
-
-    .popup-content h2 {
-      margin-bottom: 15px;
-      color: #00aaff;
-    }
-
+    .popup-content h2 { margin-bottom: 15px; color: #00aaff; }
     .popup-content input {
-      width: 100%;
-      padding: 8px;
-      margin: 8px 0;
-      border: none;
-      border-radius: 8px;
-      background: rgba(255,255,255,0.1);
-      color: #fff;
+      width: 100%; padding: 8px; margin: 8px 0; border: none; border-radius: 8px;
+      background: rgba(255,255,255,0.1); color: #fff;
     }
-
     .popup-content button {
-      width: 48%;
-      margin: 5px 1%;
-      padding: 8px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      color: #fff;
-      font-weight: bold;
-      background: #007bff;
-      transition: 0.3s;
-      box-shadow: 0 0 10px #007bff;
+      width: 48%; margin: 5px 1%; padding: 8px; border: none; border-radius: 8px;
+      cursor: pointer; color: #fff; font-weight: bold; background: #007bff;
     }
-
-    .popup-content button:hover {
-      background: #0095ff;
-      box-shadow: 0 0 20px #00aaff;
-      transform: scale(1.05);
-    }
-
-    .admin-controls {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 10px;
-    }
-
+    .popup-content button:hover { background: #0095ff; transform: scale(1.05); }
+    .admin-controls { display: flex; justify-content: center; gap: 10px; margin-top: 10px; }
     .admin-controls button {
-      background: transparent;
-      border: 1px solid #00aaff;
-      color: #00aaff;
-      padding: 5px 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: 0.3s;
+      background: transparent; border: 1px solid #00aaff; color: #00aaff;
+      padding: 5px 10px; border-radius: 6px; cursor: pointer; transition: 0.3s;
     }
-
-    .admin-controls button:hover {
-      background: #00aaff;
-      color: #fff;
-    }
+    .admin-controls button:hover { background: #00aaff; color: #fff; }
   </style>
 </head>
 <body>
   <header>
+    <button id="adminBtn">Admin</button>
     <div>
-      <button id="adminBtn">Admin</button>
-      <button id="logoutBtn" style="display:none; margin-left:10px;">Logout</button>
+      <button onclick="exportProducts()">Export</button>
+      <button onclick="importProducts()">Import</button>
+      <input type="file" id="fileInput" accept=".json" style="display:none" onchange="handleImport(event)">
     </div>
-    <input type="text" id="searchBar" placeholder="Search product...">
   </header>
 
   <h1>Royal Blue Shop</h1>
+  <div class="search-box">
+    <input type="text" id="searchBox" placeholder="Search product..." oninput="searchProducts()">
+  </div>
+
   <div class="product-list" id="shop"></div>
 
-  <!-- Admin Login Popup -->
+  <!-- Admin Popup -->
   <div class="popup" id="adminPopup">
     <div class="popup-content">
       <h2>Admin Login</h2>
@@ -228,7 +103,7 @@
       <h2 id="popupTitle">Add Product</h2>
       <input type="text" id="productName" placeholder="Product Name">
       <input type="text" id="productDesc" placeholder="Description">
-      <input type="file" id="productImage" accept="image/*">
+      <input type="file" id="productImageFile" accept="image/*">
       <input type="number" id="productPrice" placeholder="Price">
       <div style="display:flex;justify-content:space-between;">
         <button onclick="saveProduct()">Save</button>
@@ -238,29 +113,20 @@
   </div>
 
   <script>
+    const password = "699752920";
     const adminBtn = document.getElementById("adminBtn");
-    const logoutBtn = document.getElementById("logoutBtn");
     const adminPopup = document.getElementById("adminPopup");
     const productPopup = document.getElementById("productPopup");
     const shop = document.getElementById("shop");
-    const searchBar = document.getElementById("searchBar");
-
-    const password = "699752920";
+    const fileInput = document.getElementById("fileInput");
     let products = JSON.parse(localStorage.getItem("products")) || [];
     let editIndex = null;
-    let isAdmin = false;
 
     function renderProducts(filter = "") {
       shop.innerHTML = "";
       const filtered = products.filter(p =>
         p.name.toLowerCase().includes(filter.toLowerCase())
       );
-
-      if (filtered.length === 0) {
-        shop.innerHTML = "<p style='text-align:center;opacity:0.8;'>No products found.</p>";
-        return;
-      }
-
       filtered.forEach((p, i) => {
         shop.innerHTML += `
           <div class="product">
@@ -268,22 +134,23 @@
             <h3>${p.name}</h3>
             <p>${p.desc}</p>
             <span>₹${p.price}</span>
-            ${
-              isAdmin
-                ? `<div class="admin-controls">
-                     <button onclick="openEdit(${i})">Edit</button>
-                     <button onclick="deleteProduct(${i})">Delete</button>
-                   </div>`
-                : ""
-            }
+            <div class="admin-controls">
+              <button onclick="openEdit(${i})">Edit</button>
+              <button onclick="deleteProduct(${i})">Delete</button>
+            </div>
           </div>`;
       });
       localStorage.setItem("products", JSON.stringify(products));
     }
 
-    function openEdit(index) {
-      editIndex = index;
-      const p = products[index];
+    function searchProducts() {
+      const query = document.getElementById("searchBox").value;
+      renderProducts(query);
+    }
+
+    function openEdit(i) {
+      editIndex = i;
+      const p = products[i];
       document.getElementById("popupTitle").innerText = "Edit Product";
       document.getElementById("productName").value = p.name;
       document.getElementById("productDesc").value = p.desc;
@@ -291,10 +158,10 @@
       productPopup.style.display = "flex";
     }
 
-    function deleteProduct(index) {
-      if (confirm("Are you sure you want to delete this product?")) {
-        products.splice(index, 1);
-        renderProducts(searchBar.value);
+    function deleteProduct(i) {
+      if (confirm("Delete this product?")) {
+        products.splice(i, 1);
+        renderProducts();
       }
     }
 
@@ -302,45 +169,67 @@
       const name = document.getElementById("productName").value.trim();
       const desc = document.getElementById("productDesc").value.trim();
       const price = document.getElementById("productPrice").value.trim();
-      const imageInput = document.getElementById("productImage");
+      const file = document.getElementById("productImageFile").files[0];
 
-      if (!name || !desc || !price || (!imageInput.files[0] && editIndex === null)) {
-        alert("Please fill all fields and choose an image!");
+      if (!name || !desc || !price || (!file && editIndex === null)) {
+        alert("Please fill all fields and select an image!");
         return;
       }
 
-      const handleSave = (imgData) => {
-        const newProduct = { name, desc, image: imgData, price: Number(price) };
-        if (editIndex !== null) {
-          products[editIndex] = newProduct;
-          editIndex = null;
-        } else {
-          products.push(newProduct);
-        }
-        closeProductPopup();
-        renderProducts(searchBar.value);
-      };
-
-      if (imageInput.files[0]) {
+      if (file) {
         const reader = new FileReader();
-        reader.onload = (e) => handleSave(e.target.result);
-        reader.readAsDataURL(imageInput.files[0]);
+        reader.onload = function(e) {
+          const newProduct = { name, desc, price: Number(price), image: e.target.result };
+          if (editIndex !== null) {
+            products[editIndex] = newProduct;
+            editIndex = null;
+          } else {
+            products.push(newProduct);
+          }
+          closeProductPopup();
+          renderProducts();
+        };
+        reader.readAsDataURL(file);
       } else {
-        handleSave(products[editIndex].image);
+        products[editIndex].name = name;
+        products[editIndex].desc = desc;
+        products[editIndex].price = Number(price);
+        closeProductPopup();
+        renderProducts();
       }
+    }
+
+    function exportProducts() {
+      const dataStr = JSON.stringify(products);
+      const blob = new Blob([dataStr], { type: "application/json" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "products.json";
+      link.click();
+    }
+
+    function importProducts() {
+      fileInput.click();
+    }
+
+    function handleImport(e) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        products = JSON.parse(event.target.result);
+        localStorage.setItem("products", JSON.stringify(products));
+        renderProducts();
+        alert("Products imported successfully!");
+      };
+      reader.readAsText(file);
     }
 
     function checkPassword() {
       const pass = document.getElementById("adminPass").value;
       if (pass === password) {
-        isAdmin = true;
         closePopup();
         productPopup.style.display = "flex";
-        logoutBtn.style.display = "inline-block";
-        renderProducts(searchBar.value);
-      } else {
-        alert("Incorrect Password!");
-      }
+      } else alert("Incorrect Password!");
     }
 
     function closePopup() { adminPopup.style.display = "none"; }
@@ -348,32 +237,16 @@
     function clearFields() {
       document.getElementById("productName").value = "";
       document.getElementById("productDesc").value = "";
-      document.getElementById("productImage").value = "";
       document.getElementById("productPrice").value = "";
+      document.getElementById("productImageFile").value = "";
       document.getElementById("popupTitle").innerText = "Add Product";
     }
 
-    adminBtn.onclick = () => {
-      if (isAdmin) {
-        productPopup.style.display = "flex";
-      } else {
-        adminPopup.style.display = "flex";
-      }
-    };
-
-    logoutBtn.onclick = () => {
-      isAdmin = false;
-      logoutBtn.style.display = "none";
-      renderProducts(searchBar.value);
-      alert("Logged out successfully!");
-    };
-
-    window.onclick = (e) => {
+    adminBtn.onclick = () => { adminPopup.style.display = "flex"; };
+    window.onclick = e => {
       if (e.target === adminPopup) closePopup();
       if (e.target === productPopup) closeProductPopup();
     };
-
-    searchBar.oninput = (e) => renderProducts(e.target.value);
 
     renderProducts();
   </script>
