@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Royal Blue Shirt",
+    "desc": "Stylish blue cotton shirt.",
+    "price": 499,
+    "image": "https://via.placeholder.com/300x200?text=Blue+Shirt"
+  },
+  {
+    "name": "Denim Jacket",
+    "desc": "Cool and comfortable denim.",
+    "price": 899,
+    "image": "https://via.placeholder.com/300x200?text=Denim+Jacket"
+  }
+]
