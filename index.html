@@ -246,7 +246,19 @@
     const searchBar = document.getElementById("searchBar");
 
     const password = "699752920";
-    let products = JSON.parse(localStorage.getItem("products")) || [];
+    let products = [];
+
+async function loadProductsFromGitHub() {
+  try {
+    const response = await fetch("https://meetpatel2146-lab.github.io/online-shop/data/products.json");
+    products = await response.json();
+    renderProducts();
+  } catch (error) {
+    console.error("Error loading products:", error);
+    shop.innerHTML = "<p style='text-align:center;opacity:0.8;'>Failed to load products.</p>";
+  }
+}
+
     let editIndex = null;
     let isAdmin = false;
 
@@ -375,7 +387,9 @@
 
     searchBar.oninput = (e) => renderProducts(e.target.value);
 
-    renderProducts();
+    loadProductsFromGitHub();
+
   </script>
 </body>
 </html>
+
