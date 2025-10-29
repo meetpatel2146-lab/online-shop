@@ -1,118 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Royal Blue Shop</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", sans-serif; }
-    body {
-      background: linear-gradient(135deg, #0a1a2f, #001a4d);
-      color: #fff;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    header {
-      width: 100%; display: flex; justify-content: space-between; align-items: center;
-      padding: 20px; background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(10px);
-      position: sticky; top: 0; z-index: 10;
-    }
-    header button {
-      background: #007bff; color: white; border: none; padding: 10px 18px;
-      border-radius: 8px; cursor: pointer; transition: all 0.3s ease;
-      font-weight: bold; box-shadow: 0 0 10px #007bff;
-    }
-    header button:hover { transform: scale(1.05); box-shadow: 0 0 20px #00aaff; background: #0095ff; }
-    #searchBar {
-      padding: 8px 12px; border-radius: 8px; border: none; outline: none;
-      width: 250px; background: rgba(255,255,255,0.1); color: white;
-    }
-    h1 { margin: 20px 0; text-shadow: 0 0 10px #007bff; }
-    .product-list {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px; width: 90%; margin-bottom: 40px;
-    }
-    .product {
-      background: rgba(255,255,255,0.05); border-radius: 15px; padding: 15px;
-      text-align: center; box-shadow: 0 0 15px rgba(0,123,255,0.3);
-      transition: all 0.3s ease;
-    }
-    .product:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(0,170,255,0.5); }
-    .product img {
-      width: 100%; border-radius: 10px; height: 180px; object-fit: cover;
-    }
-    .product h3 { margin: 10px 0 5px; }
-    .product p { font-size: 14px; opacity: 0.8; }
-    .product span { display: block; margin-top: 8px; color: #00aaff; font-weight: bold; }
-    .popup {
-      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6); justify-content: center; align-items: center;
-      animation: fadeIn 0.4s ease;
-    }
-    @keyframes fadeIn { from {opacity: 0; transform: scale(0.95);} to {opacity: 1; transform: scale(1);} }
-    .popup-content {
-      background: rgba(10,30,60,0.9); padding: 25px; border-radius: 15px;
-      width: 320px; box-shadow: 0 0 20px #007bff; backdrop-filter: blur(10px);
-    }
-    .popup-content h2 { margin-bottom: 15px; color: #00aaff; }
-    .popup-content input {
-      width: 100%; padding: 8px; margin: 8px 0; border: none;
-      border-radius: 8px; background: rgba(255,255,255,0.1); color: #fff;
-    }
-    .popup-content button {
-      width: 48%; margin: 5px 1%; padding: 8px; border: none;
-      border-radius: 8px; cursor: pointer; color: #fff; font-weight: bold;
-      background: #007bff; transition: 0.3s; box-shadow: 0 0 10px #007bff;
-    }
-    .popup-content button:hover {
-      background: #0095ff; box-shadow: 0 0 20px #00aaff; transform: scale(1.05);
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <button id="adminBtn">Admin</button>
-    <input type="text" id="searchBar" placeholder="Search product...">
-  </header>
 
-  <h1>Royal Blue Shop</h1>
-  <div class="product-list" id="shop"></div>
-
-  <!-- Admin Popup -->
-  <div class="popup" id="adminPopup">
-    <div class="popup-content">
-      <h2>Admin Login</h2>
-      <input type="password" id="adminPass" placeholder="Enter Password">
-      <div style="display:flex;justify-content:space-between;">
-        <button onclick="checkPassword()">Login</button>
-        <button onclick="closePopup()">Cancel</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Add Product Popup -->
-  <div class="popup" id="productPopup">
-    <div class="popup-content">
-      <h2>Add Product</h2>
-      <input type="text" id="productName" placeholder="Product Name">
-      <input type="text" id="productDesc" placeholder="Description">
-      <input type="file" id="productImage" accept="image/*">
-      <input type="number" id="productPrice" placeholder="Price">
-      <div style="display:flex;justify-content:space-between;">
-        <button id="saveProductBtn">Save</button>
-        <button onclick="closeProductPopup()">Cancel</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Firebase Integration -->
   <script type="module">
+    // Import Firebase modules
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-    import { getDatabase, ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
-    import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
+    import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
 
+    // Your Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyB37L6VjGExz3ks1K-hPRPhpF0_BL8Y72M",
       authDomain: "royalblueshop-1e2a6.firebaseapp.com",
@@ -120,84 +18,213 @@
       projectId: "royalblueshop-1e2a6",
       storageBucket: "royalblueshop-1e2a6.appspot.com",
       messagingSenderId: "130634678840",
-      appId: "1:130634678840:web:2daedc466fbe20b5eb1ccd",
+      appId: "1:130634678840:web:2daedc466fbe20b5eb1ccd"
     };
 
+    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
-    const storage = getStorage(app);
 
-    // Elements
-    const adminBtn = document.getElementById("adminBtn");
-    const adminPopup = document.getElementById("adminPopup");
-    const productPopup = document.getElementById("productPopup");
-    const shop = document.getElementById("shop");
-    const searchBar = document.getElementById("searchBar");
-    const password = "699752920";
-
-    adminBtn.onclick = () => (adminPopup.style.display = "flex");
-    function closePopup() { adminPopup.style.display = "none"; }
-    function closeProductPopup() { productPopup.style.display = "none"; }
-
-    window.onclick = (e) => {
-      if (e.target === adminPopup) closePopup();
-      if (e.target === productPopup) closeProductPopup();
-    };
+    const adminPassword = "699752920";
 
     // Admin Login
-    window.checkPassword = function () {
-      const pass = document.getElementById("adminPass").value;
-      if (pass === password) {
-        closePopup();
-        productPopup.style.display = "flex";
-      } else alert("Incorrect Password!");
-    };
-
-    // Save Product
-    document.getElementById("saveProductBtn").onclick = async function () {
-      const name = document.getElementById("productName").value.trim();
-      const desc = document.getElementById("productDesc").value.trim();
-      const price = document.getElementById("productPrice").value.trim();
-      const imageFile = document.getElementById("productImage").files[0];
-
-      if (!name || !desc || !price || !imageFile) {
-        alert("Please fill all fields and select an image!");
-        return;
+    function openAdmin() {
+      const pass = prompt("Enter Admin Password:");
+      if (pass === adminPassword) {
+        document.getElementById("adminPanel").style.display = "block";
+      } else {
+        alert("Incorrect Password!");
       }
-
-      const storageRef = sRef(storage, 'images/' + imageFile.name);
-      await uploadBytes(storageRef, imageFile);
-      const imageUrl = await getDownloadURL(storageRef);
-
-      const newRef = push(ref(db, "products"));
-      await set(newRef, { name, desc, image: imageUrl, price });
-
-      alert("✅ Product added successfully!");
-      productPopup.style.display = "none";
-    };
-
-    // Render Products
-    function renderProducts(filter = "") {
-      const productsRef = ref(db, "products");
-      onValue(productsRef, (snapshot) => {
-        shop.innerHTML = "";
-        snapshot.forEach((child) => {
-          const p = child.val();
-          if (p.name.toLowerCase().includes(filter.toLowerCase())) {
-            shop.innerHTML += `
-              <div class="product">
-                <img src="${p.image}" alt="${p.name}">
-                <h3>${p.name}</h3>
-                <p>${p.desc}</p>
-                <span>₹${p.price}</span>
-              </div>`;
-          }
-        });
-      });
     }
 
-    searchBar.oninput = (e) => renderProducts(e.target.value);
-    renderProducts();
+    // Add another image input field
+    window.addImageField = function () {
+      const container = document.getElementById("imageInputs");
+      const input = document.createElement("input");
+      input.type = "text";
+      input.placeholder = "Image URL (https://...)";
+      input.classList.add("image-url");
+      container.appendChild(input);
+    };
+
+    // On page load
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("addProductForm");
+
+      // Add Product
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById("productName").value;
+        const price = document.getElementById("productPrice").value;
+
+        // Collect all image URLs
+        const imageInputs = document.querySelectorAll(".image-url");
+        const images = [];
+        imageInputs.forEach(input => {
+          if (input.value.trim().startsWith("http")) images.push(input.value.trim());
+        });
+
+        if (images.length === 0) {
+          alert("Please add at least one valid image URL!");
+          return;
+        }
+
+        const productRef = ref(db, "products");
+        await push(productRef, { name, price, images });
+
+        alert("✅ Product added successfully!");
+        form.reset();
+        document.getElementById("imageInputs").innerHTML = '<input type="text" class="image-url" placeholder="Image URL (https://...)" required>';
+      });
+
+      // Load Products
+      const shopContainer = document.getElementById("shop");
+      const productRef = ref(db, "products");
+
+      onValue(productRef, (snapshot) => {
+        shopContainer.innerHTML = "";
+        snapshot.forEach((child) => {
+          const data = child.val();
+          const div = document.createElement("div");
+          div.classList.add("product");
+
+          let currentImage = 0;
+
+          div.innerHTML = `
+            <img src="${data.images[0]}" alt="${data.name}" class="product-img">
+            <h3>${data.name}</h3>
+            <p>₹${data.price}</p>
+          `;
+
+          const imgEl = div.querySelector(".product-img");
+          imgEl.addEventListener("click", () => {
+            currentImage = (currentImage + 1) % data.images.length;
+            imgEl.src = data.images[currentImage];
+          });
+
+          shopContainer.appendChild(div);
+        });
+      });
+    });
   </script>
+
+  <style>
+    body {
+      font-family: Poppins, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    header {
+      background: #1e90ff;
+      color: white;
+      padding: 15px;
+      font-size: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header button {
+      background: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      color: #1e90ff;
+      font-weight: bold;
+    }
+
+    #shop {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 20px;
+      gap: 20px;
+    }
+
+    .product {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 10px;
+      width: 180px;
+    }
+
+    .product img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .product img:hover {
+      transform: scale(1.05);
+    }
+
+    #adminPanel {
+      display: none;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 320px;
+      margin: 30px auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background: #1e90ff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+      #shop {
+        flex-direction: column;
+        align-items: center;
+      }
+      .product {
+        width: 80%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div>🛍 Royal Blue Shop</div>
+    <button onclick="openAdmin()">Admin</button>
+  </header>
+
+  <div id="adminPanel">
+    <h2>Add Product</h2>
+    <form id="addProductForm">
+      <input type="text" id="productName" placeholder="Product Name" required>
+      <input type="number" id="productPrice" placeholder="Price (₹)" required>
+
+      <div id="imageInputs">
+        <input type="text" class="image-url" placeholder="Image URL (https://...)" required>
+      </div>
+
+      <button type="button" onclick="addImageField()">➕ Add More Image</button>
+      <button type="submit">Save Product</button>
+    </form>
+  </div>
+
+  <div id="shop"></div>
 </body>
 </html>
